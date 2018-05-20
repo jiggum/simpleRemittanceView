@@ -18,13 +18,13 @@ export default class Component {
 
   setProps(props) {
     const nextProps = Object.assign(cloneObject(this.props), props);
-    this.update(nextProps, this.state);
+    this.element && this.update(nextProps, this.state);
     this.props = nextProps;
   }
 
   setState(state) {
     const nextState = Object.assign(cloneObject(this.state), state);
-    this.update(this.props, nextState);
+    this.element && this.update(this.props, nextState);
     this.state = nextState;
   }
 
@@ -39,7 +39,9 @@ export default class Component {
 
   render(link, html) {
     this.element = this.createElementFromHTML(html);
-    link(this.element);
-    this.componentDidMount();
+    if (link) {
+      link(this.element);
+      this.componentDidMount();
+    }
   }
 }

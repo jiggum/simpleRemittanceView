@@ -29,6 +29,31 @@ export class SendMoneyView extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  componentDidMount() {
+    // MoneyInput
+    this.moneyInput = new MoneyInput({
+      title: '보낼 금액',
+      initialValue: '0',
+      onKeyDown: this.onKeyDownMoneyInput,
+      validate: this.validateMoneyInput,
+    });
+
+    // BankAccountSwiper
+    this.bankAccountSwiper = new BankAccountSwiper({
+      bankAccounts: this.props.userAccounts,
+      onSlideChangeTransitionEnd: this.onSlideChangeTransitionEnd,
+    });
+
+    // SendButton
+    this.sendButton = new Button({
+      size: 'large',
+      text: '보내기',
+      class: 'SendMoney__sendBtn',
+      disabled: !this.validate(this.state),
+      onClick: this.onSubmit,
+    });
+  }
+
   onKeyDownMoneyInput(amountMoneyToSend) {
     this.setState({
       amountMoneyToSend: amountMoneyToSend,
@@ -55,7 +80,8 @@ export class SendMoneyView extends Component {
       holdAmount = state.currentUserAccount.deposit.amount || 0;
     }
     return state.amountMoneyToSend > 0 &&
-      state.amountMoneyToSend <= holdAmount;
+      (state.amountMoneyToSend <= holdAmount ||
+        state.currentUserAccount.corporation.id !== 'toss');
   }
 
   update(nextProps, nextState) {
@@ -64,6 +90,15 @@ export class SendMoneyView extends Component {
       this.sendButton.setProps({
         disabled: !isValid,
       });
+    }
+    if (this.state.amountMoneyToSend <= 0 && nextState.amountMoneyToSend > 0) {
+      const sendMoneyContentEl = this.element.getElementsByClassName('SendMoney__content')[0];
+      this.bankAccountSwiper.render(sendMoneyContentEl.appendChild.bind(sendMoneyContentEl));
+      this.sendButton.render(sendMoneyContentEl.appendChild.bind(sendMoneyContentEl));
+    } else if (this.state.amountMoneyToSend > 0 && nextState.amountMoneyToSend <= 0) {
+      const sendMoneyContentEl = this.element.getElementsByClassName('SendMoney__content')[0];
+      sendMoneyContentEl.removeChild(this.bankAccountSwiper.element);
+      sendMoneyContentEl.removeChild(this.sendButton.element);
     }
   }
 
@@ -82,32 +117,7 @@ export class SendMoneyView extends Component {
     super.render(link, html);
 
     const sendMoneyContentEl = this.element.getElementsByClassName('SendMoney__content')[0];
-
-    // MoneyInput
-    const moneyInput = new MoneyInput({
-      title: '보낼 금액',
-      initialValue: '0',
-      onKeyDown: this.onKeyDownMoneyInput,
-      validate: this.validateMoneyInput,
-    });
-    moneyInput.render(sendMoneyContentEl.appendChild.bind(sendMoneyContentEl));
-
-    // BankAccountSwiper
-    const bankAccountSwiper = new BankAccountSwiper({
-      bankAccounts: this.props.userAccounts,
-      onSlideChangeTransitionEnd: this.onSlideChangeTransitionEnd,
-    });
-    bankAccountSwiper.render(sendMoneyContentEl.appendChild.bind(sendMoneyContentEl));
-
-    // SendButton
-    this.sendButton = new Button({
-      size: 'large',
-      text: '보내기',
-      class: 'SendMoney__sendBtn',
-      disabled: !this.validate(this.state),
-      onClick: this.onSubmit,
-    });
-    this.sendButton.render(sendMoneyContentEl.appendChild.bind(sendMoneyContentEl));
+    this.moneyInput.render(sendMoneyContentEl.appendChild.bind(sendMoneyContentEl));
   }
 }
 
