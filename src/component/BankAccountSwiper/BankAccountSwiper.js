@@ -15,26 +15,23 @@ export default class BankAccountSwiper extends Component {
    */
   constructor(props) {
     super(props);
+    this.initializeSwiper = this.initializeSwiper.bind(this);
   }
 
-  initialize() {
-    // window.swiper = new Swiper(this.element.getElementsByClassName('swiper-container'), {
-    //   pagination: {
-    //     el: this.element.getElementsByClassName('swiper-pagination'),
-    //     dynamicBullets: true,
-    //   },
-    // });
-    setTimeout(() => {
-      window.swiper = new Swiper('.swiper-container', {
-        pagination: {
-          el: '.swiper-pagination',
-          dynamicBullets: true,
-        },
-      });
-    }, 1000);
+  componentDidMount() {
+    this.initializeSwiper();
   }
 
-  render() {
+  initializeSwiper() {
+    this.swiper = new Swiper('.swiper-container', {
+      pagination: {
+        el: '.swiper-pagination',
+        dynamicBullets: true,
+      },
+    });
+  }
+
+  render(link) {
     const html = (
       `<div class="BankAccountSwiper">
         <div class="swiper-container">
@@ -54,7 +51,6 @@ export default class BankAccountSwiper extends Component {
         </div>
       </div>`
     );
-    super.render(html);
-    this.initialize();
+    super.render(link, html);
   }
 }

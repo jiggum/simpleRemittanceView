@@ -31,7 +31,7 @@ export default class MoneyInput extends Component {
     this.renderWarnMessage = this.renderWarnMessage.bind(this);
   }
 
-  elementDidCreated() {
+  componentDidMount() {
     this.element.addEventListener('keydown', this.onKeyDown);
     this.element.getElementsByClassName('MoneyInput__input')[0].addEventListener('mousedown', this.onInputClick);
   }
@@ -84,7 +84,7 @@ export default class MoneyInput extends Component {
     return `<span class="color-warn">${message}</span>`;
   }
 
-  render() {
+  render(link) {
     const html = (
       `<div class="MoneyInput">
         <div class="MoneyInput__title">${this.props.title}</div>
@@ -95,7 +95,7 @@ export default class MoneyInput extends Component {
         <div class="MoneyInput__message">${this.state.message || ''}</div>
       </div>`
     );
-    super.render(html);
+    super.render(link, html);
 
   }
 }

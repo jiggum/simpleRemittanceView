@@ -7,11 +7,12 @@ export default class Component {
     this.isRendered = false;
     this.props = props;
     this.state = {};
+    this.componentDidMount = this.componentDidMount.bind(this);
     this.setProps = this.setProps.bind(this);
     this.createElementFromHTML = this.createElementFromHTML.bind(this);
   }
 
-  elementDidCreated() {
+  componentDidMount() {
 
   }
 
@@ -34,8 +35,9 @@ export default class Component {
   update(nextProps, nextState) {
   }
 
-  render(html) {
+  render(link, html) {
     this.element = this.createElementFromHTML(html);
-    this.elementDidCreated();
+    link(this.element);
+    this.componentDidMount();
   }
 }

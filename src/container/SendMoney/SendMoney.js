@@ -39,7 +39,7 @@ export class SendMoneyView extends Component {
     }
   }
 
-  render() {
+  render(link) {
     const html = (
       `<div class="SendMoney">
         <img src="${closeImg}" />
@@ -47,7 +47,7 @@ export class SendMoneyView extends Component {
         </div>
       </div>`
     );
-    super.render(html);
+    super.render(link, html);
 
     const sendMoneyContentEl = this.element.getElementsByClassName('SendMoney__content')[0];
 
@@ -58,15 +58,13 @@ export class SendMoneyView extends Component {
       onKeyDown: this.onKeyDownMoneyInput,
       validate: this.validateMoneyInput,
     });
-    moneyInput.render();
-    sendMoneyContentEl.appendChild(moneyInput.element);
+    moneyInput.render(sendMoneyContentEl.appendChild.bind(sendMoneyContentEl));
 
     // BankAccountSwiper
     const bankAccountSwiper = new BankAccountSwiper({
       bankAccounts: [],
     });
-    bankAccountSwiper.render();
-    sendMoneyContentEl.appendChild(bankAccountSwiper.element);
+    bankAccountSwiper.render(sendMoneyContentEl.appendChild.bind(sendMoneyContentEl));
   }
 }
 

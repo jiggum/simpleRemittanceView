@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
     {firstname: 'firstname', lastname: 'lastname'},
   ];
   const sendMoney = new SendMoney({users});
-  sendMoney.render();
-  rootEl.appendChild(sendMoney.element);
+  sendMoney.render(rootEl.appendChild.bind(rootEl));
 })
 ;
