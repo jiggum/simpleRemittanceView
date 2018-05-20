@@ -1,0 +1,73 @@
+@import 'general/scss/variable.scss';
+
+.Button {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  background-color: $background-color-clear;
+  border-radius: 2px;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+
+  .Button__text {
+    z-index: 0;
+    color: $text-color-brand-darker;
+  }
+
+  &-large {
+    height: 48px;
+    .Button__text {
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
+
+  .Button__hoverSpan {
+    position: absolute;
+    display: block;
+    width: 70%;
+    border-radius: 50%;
+    background-color: $background-color-brand-lighter;
+    transition: all 0.3s ease-in-out;
+    opacity: 0;
+    &:after {
+      content: "";
+      display: block;
+      padding-bottom: 100%;
+    }
+  }
+  &:hover {
+    cursor: pointer;
+    .Button__text {
+      color: $text-color-6;
+    }
+    .Button__hoverSpan {
+      opacity: 1;
+      width: 130%;
+    }
+  }
+
+  &:active {
+    .Button__hoverSpan {
+      background-color: $background-color-brand-active;
+    }
+  }
+
+  &--disabled {
+    background-color: $background-color-disabled;
+    .Button__hoverSpan {
+      display: none;
+    }
+    .Button__text {
+      color: $text-color-disabled;
+    }
+    &:hover {
+      cursor: not-allowed;
+      .Button__text {
+        color: $text-color-disabled;
+      }
+    }
+  }
+}

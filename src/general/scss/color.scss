@@ -3,6 +3,7 @@ $color-brand-lighter: #a3c1ff;
 $color-brand-default: #6191ff;
 $color-brand-darker: #5475c7;
 $color-brand-dark: #344c8f;
+$color-brand-active: #5482e8;
 $color-orange: #f39d3f;
 $color-bluegreen: #68e7c0;
 
@@ -17,16 +18,21 @@ $text-color-4: #aaa;
 $text-color-5: #ccc;
 $text-color-6: #fff;
 
-$text-color-brand: $color-brand-default;
-$text-color-brand-lighter: $color-brand-lighter;
 $text-color-brand-light: $color-brand-light;
+$text-color-brand-lighter: $color-brand-lighter;
+$text-color-brand: $color-brand-default;
+$text-color-brand-darker: $color-brand-darker;
+
 $text-color-disabled: $text-color-5;
 $text-color-warn: $color-warn;
 $text-color-highlight: $color-highlight;
 
+$background-color-brand-darker: $color-brand-dark;
 $background-color-brand: $color-brand-darker;
 $background-color-brand-lighter: $color-brand-default;
-$background-color-clear: #fffff;
+$background-color-brand-light: $color-brand-lighter;
+$background-color-brand-active: $color-brand-active;
+$background-color-clear: #ffffff;
 $background-color-disabled: #e5e5e5;
 $background-color-highlight: $color-highlight;
 
