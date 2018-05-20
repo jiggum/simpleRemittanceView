@@ -8,7 +8,7 @@
 .MoneyInput__title {
   font-size: 13px;
   color: $text-color-brand-lighter;
-  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .MoneyInput__message {
@@ -20,19 +20,29 @@
 
 .MoneyInput__inputContainer {
   border-bottom: $border-default;
+  position: relative;
 }
 
-.MoneyInput__input {
-  font-size: 18px;
+.MoneyInput__input, .MoneyInput__inputSizer {
+  font-size: 15pt;
+  max-width: calc(100% - 25px);
   color: $text-color-6;
   display: inline-block;
   background-color: transparent;
   border: none;
   outline: none;
+  font-weight: 400;
+  font-family: sans-serif;
+  padding: 0;
+}
+
+.MoneyInput__inputSizer {
+  visibility: hidden;
+  position: absolute;
 }
 
 .MoneyInput__inputUnit {
-  font-size: 18px;
+  font-size: 15pt;
   color: $text-color-6;
   display: inline-block;
 }

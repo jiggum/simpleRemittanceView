@@ -26,6 +26,7 @@ export default class MoneyInput extends Component {
       message: null,
       warn: false,
     };
+    this.calcInputWidth = this.calcInputWidth.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onInputClick = this.onInputClick.bind(this);
     this.renderWarnMessage = this.renderWarnMessage.bind(this);
@@ -34,6 +35,14 @@ export default class MoneyInput extends Component {
   componentDidMount() {
     this.element.addEventListener('keydown', this.onKeyDown);
     this.element.getElementsByClassName('MoneyInput__input')[0].addEventListener('mousedown', this.onInputClick);
+    this.calcInputWidth();
+  }
+
+  calcInputWidth() {
+    const inputSizer = this.element.getElementsByClassName('MoneyInput__inputSizer')[0];
+    const input = this.element.getElementsByClassName('MoneyInput__input')[0];
+    inputSizer.innerText = input.value;
+    input.style.width = inputSizer.offsetWidth + 2;
   }
 
   update(nextProps, nextState) {
@@ -55,12 +64,14 @@ export default class MoneyInput extends Component {
       default:
         amountMoneyToSendStr = previousAmountMoneyToSendStr + e.key;
         // if is not valid, throw error
-        this.props.validate && this.props.validate(e);
+        this.props.validate && this.props.validate(e, parseInt(amountMoneyToSendStr));
       }
       this.props.onKeyDown(parseInt(amountMoneyToSendStr));
       // prevent input text's default changing event
       e.preventDefault();
       e.target.value = formatMoneySeparated(amountMoneyToSendStr);
+      // dynamic input width
+      this.calcInputWidth();
       this.setState({
         message: formatMoneyKo(amountMoneyToSendStr),
         warn: false,
@@ -89,6 +100,7 @@ export default class MoneyInput extends Component {
       `<div class="MoneyInput">
         <div class="MoneyInput__title">${this.props.title}</div>
         <div class="MoneyInput__inputContainer">
+            <span class="MoneyInput__inputSizer"></span>
             <input class="MoneyInput__input" type="text" value="${this.props.initialValue}"/>
             <div class="MoneyInput__inputUnit">원</div>
         </div>
