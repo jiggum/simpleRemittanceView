@@ -1,3 +1,5 @@
+$color-brand-light: #dde7ff;
+$color-brand-lighter: #a3c1ff;
 $color-brand-default: #5881f0;
 $color-brand-darker: #5475c7;
 $color-brand-dark: #344c8f;
@@ -16,6 +18,8 @@ $text-color-5: #ccc;
 $text-color-6: #fff;
 
 $text-color-brand: $color-brand-default;
+$text-color-brand-lighter: $color-brand-lighter;
+$text-color-brand-light: $color-brand-light;
 $text-color-disabled: $text-color-5;
 $text-color-warn: $color-warn;
 $text-color-highlight: $color-highlight;

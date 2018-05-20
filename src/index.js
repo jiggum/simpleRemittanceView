@@ -4,13 +4,13 @@ import SendMoney from 'container/SendMoney/SendMoney';
 // I used `defaultExport` to state that variable name doesn't matter
 
 document.addEventListener('DOMContentLoaded', function () {
-  const root = document.getElementById('app');
+  const rootEl = document.getElementById('app');
   const users = [
     {firstname: 'firstname', lastname: 'lastname'},
   ];
   const sendMoney = new SendMoney({users});
   sendMoney.render();
-  root.appendChild(sendMoney.element);
+  rootEl.appendChild(sendMoney.element);
   setTimeout(() => {
     sendMoney.setProps({
       users: [

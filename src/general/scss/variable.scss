@@ -1,3 +1,8 @@
 @import 'general/scss/color.scss';
 
+$side-padding: 12px;
 $border-default: 1px solid #ffffff;
+
+.color-warn {
+  color: $text-color-warn;
+}

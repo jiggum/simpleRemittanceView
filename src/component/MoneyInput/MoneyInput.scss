@@ -1,0 +1,35 @@
+@import 'general/scss/variable.scss';
+
+.MoneyInput{
+  display: flex;
+  flex-direction: column;
+}
+
+.MoneyInput__title {
+  font-size: 13px;
+  color: $text-color-brand-lighter;
+}
+
+.MoneyInput__message {
+  font-size: 13px;
+  color: $text-color-brand-light;
+}
+
+.MoneyInput__inputContainer {
+  border-bottom: $border-default;
+}
+
+.MoneyInput__input {
+  font-size: 18px;
+  color: $text-color-6;
+  display: inline-block;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.MoneyInput__inputUnit {
+  font-size: 18px;
+  color: $text-color-6;
+  display: inline-block;
+}
