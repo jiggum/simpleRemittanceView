@@ -12,9 +12,8 @@ import './SendMoney.scss';
 export class SendMoneyView extends Component {
   /**
    *
-   * @param {object[]} props.users
-   * @param {string} props.users[].firstname
-   * @param {string} props.users[].lastname
+   * @param {object} props.user
+   * @param {object[]} props.userAccounts
    */
   constructor(props) {
     super(props);
@@ -62,32 +61,7 @@ export class SendMoneyView extends Component {
 
     // BankAccountSwiper
     const bankAccountSwiper = new BankAccountSwiper({
-      bankAccounts: [
-        {
-          "corporation": {
-            "id": "Shinhan",
-            "name": " "
-          },
-          "account": "4648*****84347",
-          "deposit": {
-            "amount": null,
-            "currency": ""
-          },
-          "fee" : 500
-        },
-        {
-          "corporation": {
-            "id": "toss",
-            "name": "Toss "
-          },
-          "account": "",
-          "deposit": {
-            "amount": 141000,
-            "currency": ""
-          },
-          "fee": 0
-        }
-      ],
+      bankAccounts: this.props.userAccounts,
     });
     bankAccountSwiper.render(sendMoneyContentEl.appendChild.bind(sendMoneyContentEl));
   }
