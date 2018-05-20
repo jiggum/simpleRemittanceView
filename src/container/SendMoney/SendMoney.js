@@ -30,6 +30,8 @@ export class SendMoneyView extends Component {
   }
 
   componentDidMount() {
+    const sendMoneyContentEl = this.element.getElementsByClassName('SendMoney__content')[0];
+
     // MoneyInput
     this.moneyInput = new MoneyInput({
       title: '보낼 금액',
@@ -37,6 +39,7 @@ export class SendMoneyView extends Component {
       onKeyDown: this.onKeyDownMoneyInput,
       validate: this.validateMoneyInput,
     });
+    this.moneyInput.render(sendMoneyContentEl.appendChild.bind(sendMoneyContentEl));
 
     // BankAccountSwiper
     this.bankAccountSwiper = new BankAccountSwiper({
@@ -115,9 +118,6 @@ export class SendMoneyView extends Component {
       </div>`
     );
     super.render(link, html);
-
-    const sendMoneyContentEl = this.element.getElementsByClassName('SendMoney__content')[0];
-    this.moneyInput.render(sendMoneyContentEl.appendChild.bind(sendMoneyContentEl));
   }
 }
 

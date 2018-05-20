@@ -21,6 +21,16 @@ export default class BankAccountSwiper extends Component {
     this.onSlideChangeTransitionEnd = this.onSlideChangeTransitionEnd.bind(this);
   }
 
+  componentDidMount() {
+    const swiperWrapperEl = this.element.getElementsByClassName('swiper-wrapper')[0];
+    for(let bankAccount of this.props.bankAccounts) {
+      const bankAccountSwiperSlider = new BankAccountSwiperSlider({ bankAccount });
+      bankAccountSwiperSlider.render(swiperWrapperEl.appendChild.bind(swiperWrapperEl));
+    }
+
+    this.initializeSwiper();
+  }
+
   initializeSwiper() {
     this.swiper = new Swiper('.swiper-container', {
       spaceBetween: 30,
@@ -50,13 +60,5 @@ export default class BankAccountSwiper extends Component {
       </div>`
     );
     super.render(link, html);
-
-    const swiperWrapperEl = this.element.getElementsByClassName('swiper-wrapper')[0];
-    for(let bankAccount of this.props.bankAccounts) {
-      const bankAccountSwiperSlider = new BankAccountSwiperSlider({ bankAccount });
-      bankAccountSwiperSlider.render(swiperWrapperEl.appendChild.bind(swiperWrapperEl));
-    }
-
-    this.initializeSwiper();
   }
 }

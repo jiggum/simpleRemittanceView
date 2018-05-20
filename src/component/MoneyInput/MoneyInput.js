@@ -96,6 +96,5 @@ export default class MoneyInput extends Component {
       </div>`
     );
     super.render(link, html);
-
   }
 }
