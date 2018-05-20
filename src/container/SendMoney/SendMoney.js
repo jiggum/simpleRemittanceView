@@ -2,6 +2,7 @@
 // import internal dependencies
 import Component from 'service/component/Component';
 import MoneyInput from 'component/MoneyInput/MoneyInput';
+import BankAccountSwiper from 'component/BankAccountSwiper/BankAccountSwiper';
 import { digitRegex } from 'util/regex';
 
 // import assets
@@ -47,7 +48,10 @@ export class SendMoneyView extends Component {
       </div>`
     );
     super.render(html);
+
     const sendMoneyContentEl = this.element.getElementsByClassName('SendMoney__content')[0];
+
+    // MoneyInput
     const moneyInput = new MoneyInput({
       title: '보낼 금액',
       initialValue: '0',
@@ -56,6 +60,13 @@ export class SendMoneyView extends Component {
     });
     moneyInput.render();
     sendMoneyContentEl.appendChild(moneyInput.element);
+
+    // BankAccountSwiper
+    const bankAccountSwiper = new BankAccountSwiper({
+      bankAccounts: [],
+    });
+    bankAccountSwiper.render();
+    sendMoneyContentEl.appendChild(bankAccountSwiper.element);
   }
 }
 

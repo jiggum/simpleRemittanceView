@@ -11,13 +11,5 @@ document.addEventListener('DOMContentLoaded', function () {
   const sendMoney = new SendMoney({users});
   sendMoney.render();
   rootEl.appendChild(sendMoney.element);
-  setTimeout(() => {
-    sendMoney.setProps({
-      users: [
-        {firstname: 'firstname', lastname: 'lastname'},
-        {firstname: 'firstname', lastname: 'lastname'},
-      ],
-    });
-  }, 2000);
 })
 ;

@@ -27,6 +27,7 @@
     "start": "webpack-dev-server --content-base src --hot --inline"
   },
   "dependencies": {
+    "swiper": "^4.2.6",
     "vanilla-jsx": "^3.0.2"
   }
 }
