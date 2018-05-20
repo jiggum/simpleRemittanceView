@@ -62,7 +62,32 @@ export class SendMoneyView extends Component {
 
     // BankAccountSwiper
     const bankAccountSwiper = new BankAccountSwiper({
-      bankAccounts: [],
+      bankAccounts: [
+        {
+          "corporation": {
+            "id": "Shinhan",
+            "name": " "
+          },
+          "account": "4648*****84347",
+          "deposit": {
+            "amount": null,
+            "currency": ""
+          },
+          "fee" : 500
+        },
+        {
+          "corporation": {
+            "id": "toss",
+            "name": "Toss "
+          },
+          "account": "",
+          "deposit": {
+            "amount": 141000,
+            "currency": ""
+          },
+          "fee": 0
+        }
+      ],
     });
     bankAccountSwiper.render(sendMoneyContentEl.appendChild.bind(sendMoneyContentEl));
   }

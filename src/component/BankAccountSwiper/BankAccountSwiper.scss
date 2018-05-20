@@ -1,29 +1,26 @@
 @import 'general/scss/variable.scss';
 
 .BankAccountSwiper{
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+
+  .swiper-container {
+    width: 100%;
+    height: 90px;
+    overflow: visible;
+  }
+  .swiper-pagination-bullet-active {
+    background-color: $background-color-highlight;
+  }
+
+  .swiper-container-horizontal>.swiper-pagination-bullets {
+    bottom: -20px;
+  }
 }
 
-.swiper-container {
-    width: 400px;
-    height: 400px;
-}
-.swiper-slide {
-    text-align: center;
-    font-size: 18px;
-    background: #fff;
-    /* Center slide text vertically */
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    align-items: center;
+.BankAccountSwiper__title {
+  font-size: 13px;
+  color: $text-color-brand-lighter;
+  margin-bottom: 8px;
 }

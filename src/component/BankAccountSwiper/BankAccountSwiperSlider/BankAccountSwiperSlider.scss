@@ -1,0 +1,36 @@
+@import 'general/scss/variable.scss';
+
+.BankAccountSwiperSlider {
+  text-align: center;
+  font-size: 18px;
+  background: $background-color-brand-lighter;
+  display: flex;
+  align-items: center;
+  opacity: 0.5;
+  transition: opacity .3s ease-in-out;
+  padding: $side-padding-thick;
+  box-sizing: border-box;
+  &.swiper-slide-active {
+    opacity: 1;
+  }
+}
+
+.BankAccountSwiperSlider__content {
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.BankAccountSwiperSlider__title {
+  color: $text-color-6;
+  font-size: 16px;
+  text-align: left;
+  line-height: 24px;
+}
+
+.BankAccountSwiperSlider__description {
+  color: $text-color-6;
+  font-size: 13px;
+  line-height: 20px;
+  text-align: left;
+}
