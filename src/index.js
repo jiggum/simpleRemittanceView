@@ -6,17 +6,15 @@ import SendMoney from 'container/SendMoney/SendMoney';
 
 const userId = '817c2a9';
 
-document.addEventListener('DOMContentLoaded', async function () {
+document.addEventListener('DOMContentLoaded', async () => {
   const rootEl = document.getElementById('app');
   const [user, userAccounts] = await Promise.all([
     getUsers({ id: userId }),
     getUsersAccounts({ id: userId }),
   ]);
-  console.log(user, userAccounts);
   const sendMoney = new SendMoney({
     user,
     userAccounts
   });
   sendMoney.render(rootEl.appendChild.bind(rootEl));
-})
-;
+});

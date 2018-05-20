@@ -17,13 +17,15 @@ export default class Component {
   }
 
   setProps(props) {
-    this.update(props, this.state);
-    this.props = props;
+    const nextProps = Object.assign(cloneObject(this.props), props);
+    this.update(nextProps, this.state);
+    this.props = nextProps;
   }
 
   setState(state) {
-    this.update(this.props, state);
-    this.state = Object.assign(cloneObject(this.state), state);
+    const nextState = Object.assign(cloneObject(this.state), state);
+    this.update(this.props, nextState);
+    this.state = nextState;
   }
 
   createElementFromHTML(htmlString) {

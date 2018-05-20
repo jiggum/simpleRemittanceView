@@ -3,6 +3,7 @@
 import Component from 'service/component/Component';
 import MoneyInput from 'component/MoneyInput/MoneyInput';
 import BankAccountSwiper from 'component/BankAccountSwiper/BankAccountSwiper';
+import { Button } from 'component/ui';
 import { digitRegex } from 'util/regex';
 
 // import assets
@@ -19,9 +20,13 @@ export class SendMoneyView extends Component {
     super(props);
     this.state = {
       amountMoneyToSend: 0,
+      currentUserAccount: this.props.userAccounts.length > 0 ? this.props.userAccounts[0] : null,
     };
     this.onKeyDownMoneyInput = this.onKeyDownMoneyInput.bind(this);
     this.validateMoneyInput = this.validateMoneyInput.bind(this);
+    this.onSlideChangeTransitionEnd = this.onSlideChangeTransitionEnd.bind(this);
+    this.validate = this.validate.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   onKeyDownMoneyInput(amountMoneyToSend) {
@@ -38,10 +43,38 @@ export class SendMoneyView extends Component {
     }
   }
 
+  onSlideChangeTransitionEnd(activeIndex) {
+    this.setState({
+      currentUserAccount: this.props.userAccounts[activeIndex],
+    });
+  }
+
+  validate(state) {
+    let holdAmount = 0;
+    if (state.currentUserAccount) {
+      holdAmount = state.currentUserAccount.deposit.amount || 0;
+    }
+    return state.amountMoneyToSend > 0 &&
+      state.amountMoneyToSend <= holdAmount;
+  }
+
+  update(nextProps, nextState) {
+    const isValid = this.validate(nextState);
+    if (this.validate(this.state) !== isValid) {
+      this.sendButton.setProps({
+        disabled: !isValid,
+      });
+    }
+  }
+
+  onSubmit() {
+    console.log(`보낼금액 : ${this.state.amountMoneyToSend}`);
+  }
+
   render(link) {
     const html = (
       `<div class="SendMoney">
-        <img src="${closeImg}" />
+        <!--<img src="${closeImg}" />-->
         <div class="SendMoney__content">
         </div>
       </div>`
@@ -62,8 +95,19 @@ export class SendMoneyView extends Component {
     // BankAccountSwiper
     const bankAccountSwiper = new BankAccountSwiper({
       bankAccounts: this.props.userAccounts,
+      onSlideChangeTransitionEnd: this.onSlideChangeTransitionEnd,
     });
     bankAccountSwiper.render(sendMoneyContentEl.appendChild.bind(sendMoneyContentEl));
+
+    // SendButton
+    this.sendButton = new Button({
+      size: 'large',
+      text: '보내기',
+      class: 'SendMoney__sendBtn',
+      disabled: !this.validate(this.state),
+      onClick: this.onSubmit,
+    });
+    this.sendButton.render(sendMoneyContentEl.appendChild.bind(sendMoneyContentEl));
   }
 }
 

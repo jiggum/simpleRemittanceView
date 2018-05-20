@@ -13,10 +13,12 @@ export default class BankAccountSwiper extends Component {
   /**
    *
    * @param {object[]} props.bankAccounts
+   * @param {function} props.onSlideChangeTransitionEnd
    */
   constructor(props) {
     super(props);
     this.initializeSwiper = this.initializeSwiper.bind(this);
+    this.onSlideChangeTransitionEnd = this.onSlideChangeTransitionEnd.bind(this);
   }
 
   initializeSwiper() {
@@ -26,7 +28,14 @@ export default class BankAccountSwiper extends Component {
         el: '.swiper-pagination',
         dynamicBullets: true,
       },
+      on: {
+        slideChangeTransitionEnd: this.onSlideChangeTransitionEnd,
+      }
     });
+  }
+
+  onSlideChangeTransitionEnd() {
+    this.props.onSlideChangeTransitionEnd(this.swiper.activeIndex);
   }
 
   render(link) {

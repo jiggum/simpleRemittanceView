@@ -10,6 +10,10 @@
   transition: opacity .3s ease-in-out;
   padding: $side-padding-thick;
   box-sizing: border-box;
+  border-radius: 1px;
+  &:hover {
+    cursor: move;
+  }
   &.swiper-slide-active {
     opacity: 1;
   }
