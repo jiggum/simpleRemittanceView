@@ -8,6 +8,16 @@ document.addEventListener('DOMContentLoaded', function () {
   const users = [
     {firstname: 'firstname', lastname: 'lastname'},
   ];
-  root.innerHTML = (new SendMoney({users})).render();
+  const sendMoney = new SendMoney({users});
+  sendMoney.render();
+  root.appendChild(sendMoney.element);
+  setTimeout(() => {
+    sendMoney.setProps({
+      users: [
+        {firstname: 'firstname', lastname: 'lastname'},
+        {firstname: 'firstname', lastname: 'lastname'},
+      ],
+    });
+  }, 2000);
 })
 ;

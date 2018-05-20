@@ -8,13 +8,12 @@ import './SendMoney.scss';
 export class SendMoneyView extends Component {
   /**
    *
-   * @param {Obejct[]} props.users
+   * @param {object[]} props.users
    * @param {string} props.users[].firstname
    * @param {string} props.users[].lastname
    */
   constructor(props) {
     super(props);
-    this.renderUser = this.renderUser.bind(this);
   }
 
   renderUser(user) {
@@ -23,15 +22,19 @@ export class SendMoneyView extends Component {
     );
   }
 
+  update(nextProps) {
+    this.element.getElementsByTagName('ul')[0].innerHTML = `${nextProps.users.map(user => this.renderUser(user)).join('')}`;
+  }
+
   render() {
-    // el = super.render();
-    return (
+    const html = (
       `<div class="SendMoney">
         <ul>
             ${this.props.users.map(user => this.renderUser(user)).join('')}
         </ul>
       </div>`
     );
+    super.render(html);
   }
 }
 
