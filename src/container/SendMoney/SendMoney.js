@@ -3,8 +3,9 @@
 import Component from 'service/component/Component';
 import MoneyInput from 'component/MoneyInput/MoneyInput';
 import BankAccountSwiper from 'component/BankAccountSwiper/BankAccountSwiper';
-import { Button } from 'component/ui';
+import { Button, Message } from 'component/ui';
 import { digitRegex } from 'util/regex';
+import { formatMoneySeparated } from 'util/string';
 
 // import assets
 import closeImg from 'asset/img/close.svg';
@@ -34,7 +35,7 @@ export class SendMoneyView extends Component {
 
     // MoneyInput
     this.moneyInput = new MoneyInput({
-      title: '보낼 금액',
+      title: `보낼 금액 (쵀대 ${formatMoneySeparated(this.props.user.limit.remain.toString())}원)`,
       initialValue: '0',
       onKeyDown: this.onKeyDownMoneyInput,
       validate: this.validateMoneyInput,
@@ -45,6 +46,12 @@ export class SendMoneyView extends Component {
     this.bankAccountSwiper = new BankAccountSwiper({
       bankAccounts: this.props.userAccounts,
       onSlideChangeTransitionEnd: this.onSlideChangeTransitionEnd,
+    });
+
+    // Message
+    this.message = new Message({
+      text: this.renderMessage(this.props, this.state),
+      class: 'SendMoney__message',
     });
 
     // SendButton
@@ -63,11 +70,16 @@ export class SendMoneyView extends Component {
     });
   }
 
-  validateMoneyInput(e) {
+  validateMoneyInput(e, amountMoneyToSend) {
     if(!digitRegex.test(e.key)) {
       // prevent input text's default changing event
       e.preventDefault();
       throw new Error('숫자만 입력하실 수 있습니다.');
+    }
+    if(amountMoneyToSend > this.props.user.limit.remain) {
+      // prevent input text's default changing event
+      e.preventDefault();
+      throw new Error(`1일 ${formatMoneySeparated(this.props.user.limit.daily.toString())}원 까지만 이체할 수 있습니다.`);
     }
   }
 
@@ -87,6 +99,29 @@ export class SendMoneyView extends Component {
         state.currentUserAccount.corporation.id !== 'toss');
   }
 
+  onSubmit() {
+    const payload = {
+      amountMoneyToSend: this.state.amountMoneyToSend,
+      corporation: {
+        id: this.state.currentUserAccount.corporation.id,
+      }
+    };
+    console.log(`Request Payload : ${JSON.stringify(payload)}`);
+  }
+
+  renderMessage(props, state) {
+    if (!state.currentUserAccount) return;
+    if (state.currentUserAccount.corporation.id === 'toss') {
+      const holdAmount = state.currentUserAccount.deposit.amount || 0;
+      if (state.amountMoneyToSend > holdAmount) {
+        return 'Toss 계좌를 채우고, 무료로 송금하세요';
+      }
+      return 'Toss계좌 / <span class="color-highlight">수수료 무료</span>';
+    } else {
+      return `무료 송금 <span class="color-highlight">${props.user.remittanceLimit.monthly}회 남음</span>월 ${props.user.remittanceLimit.remain}회`;
+    }
+  }
+
   update(nextProps, nextState) {
     const isValid = this.validate(nextState);
     if (this.validate(this.state) !== isValid) {
@@ -94,25 +129,30 @@ export class SendMoneyView extends Component {
         disabled: !isValid,
       });
     }
+    const newMessageText = this.renderMessage(nextProps, nextState);
+    if (this.renderMessage(this.props, this.state) !== newMessageText) {
+      this.message.setProps({
+        text: newMessageText,
+      });
+    }
     if (this.state.amountMoneyToSend <= 0 && nextState.amountMoneyToSend > 0) {
       const sendMoneyContentEl = this.element.getElementsByClassName('SendMoney__content')[0];
       this.bankAccountSwiper.render(sendMoneyContentEl.appendChild.bind(sendMoneyContentEl));
+      this.message.render(sendMoneyContentEl.appendChild.bind(sendMoneyContentEl));
       this.sendButton.render(sendMoneyContentEl.appendChild.bind(sendMoneyContentEl));
     } else if (this.state.amountMoneyToSend > 0 && nextState.amountMoneyToSend <= 0) {
       const sendMoneyContentEl = this.element.getElementsByClassName('SendMoney__content')[0];
       sendMoneyContentEl.removeChild(this.bankAccountSwiper.element);
+      sendMoneyContentEl.removeChild(this.message.element);
       sendMoneyContentEl.removeChild(this.sendButton.element);
     }
-  }
-
-  onSubmit() {
-    console.log(`보낼금액 : ${this.state.amountMoneyToSend}`);
   }
 
   render(link) {
     const html = (
       `<div class="SendMoney">
         <!--<img src="${closeImg}" />-->
+        <div class="SendMoney__title">송금하기</div>
         <div class="SendMoney__content">
         </div>
       </div>`

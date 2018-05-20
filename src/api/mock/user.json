@@ -4,5 +4,9 @@
   "limit": {
     "daily": 2000000,
     "remain": 2000000
+  },
+  "remittanceLimit": {
+    "monthly": 5,
+    "remain": 3
   }
 }
