@@ -3,6 +3,7 @@
 import Component from 'service/component/Component';
 
 // import assets
+import closeImg from 'asset/img/close.svg';
 import './SendMoney.scss';
 
 export class SendMoneyView extends Component {
@@ -29,6 +30,7 @@ export class SendMoneyView extends Component {
   render() {
     const html = (
       `<div class="SendMoney">
+        <img src="${closeImg}" />
         <ul>
             ${this.props.users.map(user => this.renderUser(user)).join('')}
         </ul>

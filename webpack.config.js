@@ -6,8 +6,8 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'build'),
-    publicPath: '/assets/',
-    filename: 'bundle.js'
+    publicPath: '/bundle/',
+    filename: 'main.js'
   },
   resolve: {
     modules: [
@@ -31,8 +31,23 @@ module.exports = {
           'style-loader',
           'css-loader',
           'postcss-loader',
-          'sass-loader'
+          {
+            loader: "sass-loader",
+            options: {
+              includePaths: ["src.general/scss"]
+            }
+          },
         ]
+      },
+      {
+        test: /\.(png|jp(e*)g|svg)$/,
+        use: [{
+          loader: 'url-loader',
+          options: {
+            limit: 8000, // Convert images < 8kb to base64 strings
+            name: '[name]-[hash].[ext]'
+          }
+        }]
       }
     ]
   }
