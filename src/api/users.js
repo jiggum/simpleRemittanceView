@@ -9,5 +9,5 @@ export const getUsersAccountsApi = ({ id }) => {
 };
 
 export const postUsersRemittanceApi = ({ id, amount, corporation }) => {
-  return api.get(`users/${id}/remittance`);
-}
+  return api.post(`users/${id}/remittance`);
+};
