@@ -117,9 +117,10 @@ class MoneyInput extends Component {
   vibrateMessage() {
     const message = this.element.getElementsByClassName('MoneyInput__message')[0];
     message.classList.remove('MoneyInput__message--animation');
-    setTimeout(() =>{
+    this.vibrateMessageTimeout && clearTimeout(this.vibrateMessageTimeout);
+    this.vibrateMessageTimeout = setTimeout(() =>{
       message.classList.add('MoneyInput__message--animation');
-    });
+    }, 100);
   }
 
   onInputContainerClick(e) {
