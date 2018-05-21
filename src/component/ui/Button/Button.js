@@ -1,22 +1,14 @@
 // import external dependencies
 import classnames from 'classnames';
+import apiCheck from 'api-check';
+
 // import internal dependencies
 import { Component } from 'lib';
 
 // import assets
 import './Button.scss';
 
-// return UserList class
-
-export default class Button extends Component {
-  /**
-   *
-   * @param {string} [props.size = null] oneOf['large', 'small', null]
-   * @param {string} props.text
-   * @param {string} props.class
-   * @param {boolean} props.disabled
-   * @param {function} props.onClick
-   */
+class Button extends Component {
   constructor(props) {
     super(props);
     this.onClick = this.onClick.bind(this);
@@ -61,3 +53,13 @@ export default class Button extends Component {
     super.render(link, html);
   }
 }
+
+Button.propTypes = {
+  text: apiCheck.string,
+  size: apiCheck.oneOf(['large', 'small']).optional,
+  class: apiCheck.string.optional,
+  disabled: apiCheck.bool.optional,
+  onClick: apiCheck.func.optional,
+};
+
+export default Button;

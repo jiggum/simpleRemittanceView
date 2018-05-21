@@ -1,5 +1,7 @@
 // import external dependencies
+import apiCheck from 'api-check';
 import classnames from 'classnames';
+
 // import internal dependencies
 import { Component } from 'lib';
 
@@ -8,13 +10,7 @@ import './Message.scss';
 
 // return UserList class
 
-export default class Message extends Component {
-  /**
-   *
-   * @param {string} props.text innerHtml
-   * @param {string} props.class
-   */
-
+class Message extends Component {
   update(nextProps) {
     if (this.props.text !== nextProps.text) {
       this.element.innerHTML = nextProps.text;
@@ -36,3 +32,10 @@ export default class Message extends Component {
     super.render(link, html);
   }
 }
+
+Message.propTypes = {
+  text: apiCheck.string,
+  class: apiCheck.string.optional,
+};
+
+export default Message;

@@ -1,4 +1,5 @@
 import cloneObject from 'util/cloneObject';
+import apiCheck from 'api-check';
 
 export default class Component {
   constructor(props) {
@@ -6,6 +7,7 @@ export default class Component {
     this.element = null;
     this.props = props;
     this.state = {};
+    this.checkPropTypes = this.checkPropTypes.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.setProps = this.setProps.bind(this);
     this.setState = this.setState.bind(this);
@@ -14,11 +16,19 @@ export default class Component {
     this.render = this.render.bind(this);
   }
 
-  componentDidMount() {
+  checkPropTypes() {
+    const error = apiCheck.shape(this.constructor.propTypes)(this.props);
+    if (error) {
+      // eslint-disable-next-line no-console
+      console.trace(error);
+    }
+  }
 
+  componentDidMount() {
   }
 
   setProps(props) {
+    this.checkPropTypes();
     const nextProps = Object.assign(cloneObject(this.props), props);
     this.element && this.update(nextProps, this.state);
     this.props = nextProps;
@@ -40,6 +50,7 @@ export default class Component {
   }
 
   render(link, html) {
+    this.checkPropTypes();
     this.element = this.createElementFromHTML(html);
     if (link) {
       link(this.element);

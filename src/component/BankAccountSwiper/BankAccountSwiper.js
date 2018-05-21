@@ -1,20 +1,17 @@
 // import external dependencies
 import Swiper from 'swiper/dist/js/swiper.min';
+import apiCheck from 'api-check';
 
 // import internal dependencies
 import { Component } from 'lib';
 import BankAccountSwiperSlider from './BankAccountSwiperSlider/BankAccountSwiperSlider';
+import { userAccountType } from 'type';
 
 // import assets
 import 'swiper/dist/css/swiper.css';
 import './BankAccountSwiper.scss';
 
-export default class BankAccountSwiper extends Component {
-  /**
-   *
-   * @param {object[]} props.bankAccounts
-   * @param {function} props.onSlideChangeTransitionEnd
-   */
+class BankAccountSwiper extends Component {
   constructor(props) {
     super(props);
     this.bankAccountSwiperSliders = [];
@@ -69,3 +66,10 @@ export default class BankAccountSwiper extends Component {
     super.render(link, html);
   }
 }
+
+BankAccountSwiper.propTypes = {
+  bankAccounts: apiCheck.arrayOf(userAccountType),
+  onSlideChangeTransitionEnd: apiCheck.func,
+};
+
+export default BankAccountSwiper;

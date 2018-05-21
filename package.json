@@ -24,9 +24,11 @@
     "webpack-dev-server": "^3.1.4"
   },
   "scripts": {
-    "start": "webpack-dev-server --content-base src --hot --inline"
+    "start": "webpack-dev-server --content-base src --hot --inline --mode development"
   },
   "dependencies": {
+    "api-check": "^7.5.5",
+    "classnames": "^2.2.5",
     "swiper": "^4.2.6",
     "vanilla-jsx": "^3.0.2"
   }

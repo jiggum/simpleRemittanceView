@@ -1,4 +1,6 @@
 // import external dependencies
+import apiCheck from 'api-check';
+
 // import internal dependencies
 import { Component } from 'lib';
 import {
@@ -12,14 +14,7 @@ import './MoneyInput.scss';
 
 // return UserList class
 
-export default class MoneyInput extends Component {
-  /**
-   *
-   * @param {string} props.title
-   * @param {string} props.initialValue
-   * @param {function} props.onKeyDown
-   * @param {function} props.validate
-   */
+class MoneyInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -113,3 +108,12 @@ export default class MoneyInput extends Component {
     super.render(link, html);
   }
 }
+
+MoneyInput.propTypes = {
+  title: apiCheck.string,
+  initialValue: apiCheck.string,
+  onKeyDown: apiCheck.func,
+  validate: apiCheck.func,
+};
+
+export default MoneyInput;

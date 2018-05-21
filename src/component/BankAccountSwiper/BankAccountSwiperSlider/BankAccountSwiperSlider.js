@@ -1,26 +1,22 @@
 // import external dependencies
-import Swiper from 'swiper/dist/js/swiper.min';
+import apiCheck from 'api-check';
 
 // import internal dependencies
 import { Component } from 'lib';
 import corporationMap from 'general/constant/corporationMap';
 import { formatMoneySeparated } from 'util/string';
+import { userAccountType } from 'type';
 
 // import assets
 import 'swiper/dist/css/swiper.css';
 import './BankAccountSwiperSlider.scss';
 
-export default class BankAccountSwiperSlider extends Component {
-  /**
-   *
-   * @param {object} props.bankAccount
-   * @param {object} props.swiper
-   */
+class BankAccountSwiperSlider extends Component {
   constructor(props) {
     super(props);
     this.onClick = this.onClick.bind(this);
-
     this.renderDescription = this.renderDescription.bind(this);
+    window.a = apiCheck;
   }
 
   componentDidMount() {
@@ -60,3 +56,10 @@ export default class BankAccountSwiperSlider extends Component {
     super.render(link, html);
   }
 }
+
+BankAccountSwiperSlider.propTypes = {
+  bankAccount: userAccountType,
+  swiper: apiCheck.object.optional,
+};
+
+export default BankAccountSwiperSlider;

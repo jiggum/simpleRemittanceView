@@ -1,6 +1,9 @@
 // import external dependencies
+import apiCheck from 'api-check';
+
 // import internal dependencies
 import { Component } from 'lib';
+import { userAccountType, userType } from 'type';
 import MoneyInput from 'component/MoneyInput/MoneyInput';
 import BankAccountSwiper from 'component/BankAccountSwiper/BankAccountSwiper';
 import { Button, Message } from 'component/ui';
@@ -12,11 +15,7 @@ import closeImg from 'asset/img/close.svg';
 import './SendMoney.scss';
 
 export class SendMoneyView extends Component {
-  /**
-   *
-   * @param {object} props.user
-   * @param {object[]} props.userAccounts
-   */
+
   constructor(props) {
     super(props);
     this.state = {
@@ -106,6 +105,7 @@ export class SendMoneyView extends Component {
         id: this.state.currentUserAccount.corporation.id,
       }
     };
+    // eslint-disable-next-line no-console
     console.log(`Request Payload : ${JSON.stringify(payload)}`);
   }
 
@@ -160,6 +160,11 @@ export class SendMoneyView extends Component {
     super.render(link, html);
   }
 }
+
+SendMoneyView.propTypes = {
+  user: userType,
+  userAccounts: apiCheck.arrayOf(userAccountType),
+};
 
 const SendMoney = SendMoneyView;
 
