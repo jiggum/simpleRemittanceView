@@ -7,7 +7,7 @@ import { remit } from 'service/user';
 import { userAccountType, userType } from 'type';
 import MoneyInput from 'component/MoneyInput/MoneyInput';
 import BankAccountSwiper from 'component/BankAccountSwiper/BankAccountSwiper';
-import { Button, Message } from 'component/ui';
+import { Button, Message, Toast } from 'component/ui';
 import { digitRegex } from 'util/regex';
 import { formatMoneySeparated } from 'util/string';
 
@@ -107,14 +107,21 @@ export class SendMoneyView extends Component {
         id: this.state.currentUserAccount.corporation.id,
       }
     };
+    this.sendButton.setProps({
+      onLoading: true,
+    });
     try {
       await remit(payload);
-      alert('송금이 완료되었습니다.');
+      Toast.success('송금이 완료되었습니다.');
       // eslint-disable-next-line no-console
       console.log(`Request Payload : ${JSON.stringify(payload)}`);
     } catch (e) {
-      alert('송금 요청이 실패하였습니다.');
+      console.trace(e);
+      Toast.error('송금 요청이 실패하였습니다.');
     }
+    this.sendButton.setProps({
+      onLoading: false,
+    });
   }
 
   renderMessage(props, state) {

@@ -1,0 +1,41 @@
+@import 'general/scss/variable.scss';
+
+.ToastRoot {
+  position: absolute;
+  top: 10px;
+}
+
+.Toast {
+  display: flex;
+  align-items: center;
+  background-color: $background-color-clear;
+  height: 36px;
+  padding: 0 16px;
+  margin: 8px auto;
+  border-radius: 4px;
+  pointer-events: all;
+  font-size: 13px;
+  color: $text-color-2;
+  transition: all .2s ease-in-out;
+  white-space: nowrap;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &--hidden {
+    opacity: 0;
+    height: 0;
+    margin: 0 auto;
+    transform: translateY(-100%);
+  }
+
+  &--success {
+    color: $text-color-brand-darker;
+  }
+
+  &--error {
+    color: $color-warn;
+  }
+
+}
