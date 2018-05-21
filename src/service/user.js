@@ -1,4 +1,4 @@
-import { getUsersApi, getUsersAccountsApi } from 'api/users';
+import { getUsersApi, getUsersAccountsApi, postUsersRemittanceApi } from 'api/users';
 
 export const getUser = async ({ id }) => {
   const res = await getUsersApi({ id });
@@ -11,5 +11,5 @@ export const getUsersAccounts = async ({ id }) => {
 };
 
 export const remit = async ({ id, amount, corporation }) => {
-  await getUsersAccountsApi({ id, amount, corporation });
+  await postUsersRemittanceApi({ id, amount, corporation });
 };
