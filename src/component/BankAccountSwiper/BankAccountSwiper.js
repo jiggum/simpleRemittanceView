@@ -17,6 +17,7 @@ export default class BankAccountSwiper extends Component {
    */
   constructor(props) {
     super(props);
+    this.bankAccountSwiperSliders = [];
     this.initializeSwiper = this.initializeSwiper.bind(this);
     this.onSlideChangeTransitionEnd = this.onSlideChangeTransitionEnd.bind(this);
   }
@@ -26,6 +27,7 @@ export default class BankAccountSwiper extends Component {
     for(let bankAccount of this.props.bankAccounts) {
       const bankAccountSwiperSlider = new BankAccountSwiperSlider({ bankAccount });
       bankAccountSwiperSlider.render(swiperWrapperEl.appendChild.bind(swiperWrapperEl));
+      this.bankAccountSwiperSliders.push(bankAccountSwiperSlider);
     }
 
     this.initializeSwiper();
@@ -41,6 +43,11 @@ export default class BankAccountSwiper extends Component {
       on: {
         slideChangeTransitionEnd: this.onSlideChangeTransitionEnd,
       }
+    });
+    this.bankAccountSwiperSliders.forEach(bankAccountSwiperSlider => {
+      bankAccountSwiperSlider.setProps({
+        swiper: this.swiper,
+      });
     });
   }
 

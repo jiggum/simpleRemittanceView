@@ -18,6 +18,14 @@
   .swiper-container-horizontal>.swiper-pagination-bullets {
     bottom: -20px;
   }
+
+  .swiper-slide-next {
+    cursor: e-resize;
+  }
+
+  .swiper-slide-prev {
+    cursor: w-resize;
+  }
 }
 
 .BankAccountSwiper__title {

@@ -14,13 +14,26 @@ export default class BankAccountSwiperSlider extends Component {
   /**
    *
    * @param {object} props.bankAccount
+   * @param {object} props.swiper
    */
   constructor(props) {
     super(props);
+    this.onClick = this.onClick.bind(this);
+
     this.renderDescription = this.renderDescription.bind(this);
   }
 
   componentDidMount() {
+    this.element.addEventListener('click', this.onClick);
+  }
+
+  onClick() {
+    if (this.element.classList.contains('swiper-slide-next')) {
+      this.props.swiper.slideNext();
+    }
+    if (this.element.classList.contains('swiper-slide-prev')) {
+      this.props.swiper.slidePrev();
+    }
   }
 
   renderDescription() {
