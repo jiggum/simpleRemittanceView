@@ -1,0 +1,41 @@
+@import 'general/scss/variable.scss';
+
+
+$ball-radius: 5px;
+$ball-interval: 20px;
+.loader {
+  position: relative;
+}
+.loader__ball {
+  position: absolute;
+  border-radius: 50%;
+  width: $ball-radius * 2;
+  height: $ball-radius * 2;
+  animation: load 2s infinite ease-in-out;
+  background-color: #fff;
+}
+.loader__ball1 {
+  left: -$ball-interval - $ball-radius * 2;
+  animation-delay: -0.4s;
+}
+.loader__ball2 {
+  animation-delay: -0.2s;
+}
+.loader__ball3 {
+  left: $ball-interval + $ball-radius * 2;
+}
+.loader:after {
+  left: 30px;
+}
+@keyframes load {
+  0%,
+  80%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  40% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
