@@ -30,6 +30,8 @@ export const get = async (url) => {
 
 export const post = async (url, payload) => {
   await wait(2000);
+  // throw error randomly
+  if (Math.random() > 0.8) throw Error('Randomly Generated Error');
   const exactUrl = `${apiRoot}${url}`;
   let res;
   switch (true) {
