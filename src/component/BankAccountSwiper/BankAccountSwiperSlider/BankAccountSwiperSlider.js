@@ -16,7 +16,6 @@ class BankAccountSwiperSlider extends Component {
     super(props);
     this.onClick = this.onClick.bind(this);
     this.renderDescription = this.renderDescription.bind(this);
-    window.a = apiCheck;
   }
 
   componentDidMount() {

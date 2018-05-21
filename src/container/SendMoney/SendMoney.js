@@ -74,7 +74,6 @@ export class SendMoneyView extends Component {
     if(!digitRegex.test(e.key)) {
       // prevent input text's default changing event
       e.preventDefault();
-      e.stopPropagation();
       throw new Error('숫자만 입력하실 수 있습니다.');
     }
     if(amountMoneyToSend > this.props.user.limit.remain) {

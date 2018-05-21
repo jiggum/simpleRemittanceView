@@ -96,7 +96,6 @@ class MoneyInput extends Component {
       this.props.onKeyDown(amountMoneyToSend);
       // prevent input text's default changing event
       e.preventDefault();
-      e.stopPropagation();
       e.target.value = formatMoneySeparated(amountMoneyToSendStr);
       // dynamic input width
       this.calcInputWidth();
