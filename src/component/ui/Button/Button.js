@@ -28,8 +28,7 @@ export default class Button extends Component {
 
   update(nextProps) {
     if (this.props.text !== nextProps.text) {
-      const buttonTextEl = this.element.getElementsByClassName('Button__text')[0];
-      buttonTextEl.innerText = nextProps.text;
+      this.element.innerText = nextProps.text;
     }
     if (this.props.disabled !== nextProps.disabled) {
       if (nextProps.disabled) {
@@ -56,8 +55,7 @@ export default class Button extends Component {
           [this.props.class]: this.props.class,
         })}"
       >
-        <span class="Button__hoverSpan"></span>
-        <span class="Button__text">${this.props.text}</span>
+        ${this.props.text}
       </div>`
     );
     super.render(link, html);
