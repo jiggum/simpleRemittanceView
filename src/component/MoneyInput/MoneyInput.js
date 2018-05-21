@@ -18,9 +18,11 @@ class MoneyInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      amountMoneyToSend: 0,
       message: null,
       warn: false,
     };
+    this.onInputBlur = this.onInputBlur.bind(this);
     this.calcInputWidth = this.calcInputWidth.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onInputContainerClick = this.onInputContainerClick.bind(this);
@@ -30,15 +32,10 @@ class MoneyInput extends Component {
   componentDidMount() {
     this.element.addEventListener('keydown', this.onKeyDown);
     const inputContainerEl = this.element.getElementsByClassName('MoneyInput__inputContainer')[0];
+    const inputEl = this.element.getElementsByClassName('MoneyInput__input')[0];
     inputContainerEl.addEventListener('mousedown', this.onInputContainerClick);
+    inputEl.addEventListener('blur', this.onInputBlur);
     this.calcInputWidth();
-  }
-
-  calcInputWidth() {
-    const inputSizer = this.element.getElementsByClassName('MoneyInput__inputSizer')[0];
-    const input = this.element.getElementsByClassName('MoneyInput__input')[0];
-    inputSizer.innerText = input.value;
-    input.style.width = inputSizer.offsetWidth + 2;
   }
 
   update(nextProps, nextState) {
@@ -48,7 +45,22 @@ class MoneyInput extends Component {
     }
   }
 
+  onInputBlur() {
+    this.setState({
+      message: formatMoneyKo(this.state.amountMoneyToSend.toString()),
+      warn: false,
+    });
+  }
+
+  calcInputWidth() {
+    const inputSizer = this.element.getElementsByClassName('MoneyInput__inputSizer')[0];
+    const input = this.element.getElementsByClassName('MoneyInput__input')[0];
+    inputSizer.innerText = input.value;
+    input.style.width = inputSizer.offsetWidth + 2;
+  }
+
   onKeyDown(e) {
+    let amountMoneyToSend = this.state.amountMoneyToSend;
     try {
       let amountMoneyToSendStr;
       const previousAmountMoneyToSendStr = symmetryformatMoneySeparated(e.target.value);
@@ -56,24 +68,28 @@ class MoneyInput extends Component {
       case 8:
         // backspace
         amountMoneyToSendStr = previousAmountMoneyToSendStr.substr(0, previousAmountMoneyToSendStr.length -1) || '0';
+        amountMoneyToSend = parseInt(amountMoneyToSendStr);
         break;
       default:
         amountMoneyToSendStr = previousAmountMoneyToSendStr + e.key;
+        amountMoneyToSend = parseInt(amountMoneyToSendStr);
         // if is not valid, throw error
-        this.props.validate && this.props.validate(e, parseInt(amountMoneyToSendStr));
+        this.props.validate && this.props.validate(e, amountMoneyToSend);
       }
-      this.props.onKeyDown(parseInt(amountMoneyToSendStr));
+      this.props.onKeyDown(amountMoneyToSend);
       // prevent input text's default changing event
       e.preventDefault();
       e.target.value = formatMoneySeparated(amountMoneyToSendStr);
       // dynamic input width
       this.calcInputWidth();
       this.setState({
+        amountMoneyToSend: amountMoneyToSend,
         message: formatMoneyKo(amountMoneyToSendStr),
         warn: false,
       });
     } catch (e) {
       this.setState({
+        amountMoneyToSend: amountMoneyToSend,
         message: e.message,
         warn: true,
       });
