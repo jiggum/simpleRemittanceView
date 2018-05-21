@@ -24,6 +24,7 @@ class MoneyInput extends Component {
       warn: false,
     };
     this.vibrateMessage = this.vibrateMessage.bind(this);
+    this.onInputFocus = this.onInputFocus.bind(this);
     this.onInputBlur = this.onInputBlur.bind(this);
     this.calcInputWidth = this.calcInputWidth.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
@@ -32,11 +33,14 @@ class MoneyInput extends Component {
   }
 
   componentDidMount() {
-    this.element.addEventListener('keydown', this.onKeyDown);
     const inputContainerEl = this.element.getElementsByClassName('MoneyInput__inputContainer')[0];
-    const inputEl = this.element.getElementsByClassName('MoneyInput__input')[0];
     inputContainerEl.addEventListener('mousedown', this.onInputContainerClick);
-    inputEl.addEventListener('blur', this.onInputBlur);
+    this.inputSizer = this.element.getElementsByClassName('MoneyInput__inputSizer')[0];
+    this.inputEl = this.element.getElementsByClassName('MoneyInput__input')[0];
+    this.inputEl.addEventListener('keydown', this.onKeyDown);
+    this.inputEl.addEventListener('keyup', this.onKeyUp);
+    this.inputEl.addEventListener('focus', this.onInputFocus);
+    this.inputEl.addEventListener('blur', this.onInputBlur);
     this.calcInputWidth();
   }
 
@@ -47,7 +51,12 @@ class MoneyInput extends Component {
     }
   }
 
+  onInputFocus() {
+    this.inputSizer.classList.add('MoneyInput__inputSizer--borderBlink');
+  }
+
   onInputBlur() {
+    this.inputSizer.classList.remove('MoneyInput__inputSizer--borderBlink');
     this.setState({
       message: formatMoneyKo(this.state.amountMoneyToSend.toString()),
       warn: false,
@@ -56,9 +65,8 @@ class MoneyInput extends Component {
 
   calcInputWidth() {
     const inputSizer = this.element.getElementsByClassName('MoneyInput__inputSizer')[0];
-    const input = this.element.getElementsByClassName('MoneyInput__input')[0];
-    inputSizer.innerText = input.value;
-    input.style.width = inputSizer.offsetWidth + 2;
+    inputSizer.innerText = this.inputEl.value;
+    this.inputEl.style.width = inputSizer.offsetWidth + 2;
   }
 
   onKeyDown(e) {
@@ -74,19 +82,21 @@ class MoneyInput extends Component {
         break;
       // enter
       case 13:
-        const input = this.element.getElementsByClassName('MoneyInput__input')[0];
-        input.blur();
+        this.inputEl.blur();
         return;
       default:
         if(!isPrintableKeyCode(e.keyCode)) return;
-        amountMoneyToSendStr = previousAmountMoneyToSendStr + e.key;
-        amountMoneyToSend = parseInt(amountMoneyToSendStr);
+        const _amountMoneyToSendStr = previousAmountMoneyToSendStr + e.key;
+        const _amountMoneyToSend = parseInt(_amountMoneyToSendStr);
         // if is not valid, throw error
         this.props.validate && this.props.validate(e, amountMoneyToSend);
+        amountMoneyToSendStr = _amountMoneyToSendStr;
+        amountMoneyToSend = _amountMoneyToSend;
       }
       this.props.onKeyDown(amountMoneyToSend);
       // prevent input text's default changing event
       e.preventDefault();
+      e.stopPropagation();
       e.target.value = formatMoneySeparated(amountMoneyToSendStr);
       // dynamic input width
       this.calcInputWidth();
@@ -114,12 +124,11 @@ class MoneyInput extends Component {
   }
 
   onInputContainerClick(e) {
-    const inputEl = this.element.getElementsByClassName('MoneyInput__input')[0];
     e.preventDefault();
     e.stopPropagation();
-    const inputValueLength = inputEl.value.length;
-    inputEl.focus();
-    inputEl.setSelectionRange(inputValueLength, inputValueLength);
+    const inputValueLength = this.inputEl.value.length;
+    this.inputEl.focus();
+    this.inputEl.setSelectionRange(inputValueLength, inputValueLength);
   }
 
   renderWarnMessage(message) {

@@ -35,7 +35,7 @@ export class SendMoneyView extends Component {
 
     // MoneyInput
     this.moneyInput = new MoneyInput({
-      title: `보낼 금액 (쵀대 ${formatMoneySeparated(this.props.user.limit.remain.toString())}원)`,
+      title: `보낼 금액 (최대 ${formatMoneySeparated(this.props.user.limit.remain.toString())}원)`,
       initialValue: '0',
       onKeyDown: this.onKeyDownMoneyInput,
       validate: this.validateMoneyInput,
@@ -74,6 +74,7 @@ export class SendMoneyView extends Component {
     if(!digitRegex.test(e.key)) {
       // prevent input text's default changing event
       e.preventDefault();
+      e.stopPropagation();
       throw new Error('숫자만 입력하실 수 있습니다.');
     }
     if(amountMoneyToSend > this.props.user.limit.remain) {
