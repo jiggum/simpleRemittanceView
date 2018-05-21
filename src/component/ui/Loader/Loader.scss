@@ -4,10 +4,13 @@
 $ball-radius: 5px;
 $ball-interval: 20px;
 .loader {
-  position: relative;
+  height: $ball-radius * 2;
+  width: $ball-radius * 6 + $ball-interval * 2;
+  display: flex;
+  align-self: center;
+  justify-content: space-between;
 }
 .loader__ball {
-  position: absolute;
   border-radius: 50%;
   width: $ball-radius * 2;
   height: $ball-radius * 2;
@@ -20,12 +23,6 @@ $ball-interval: 20px;
 }
 .loader__ball2 {
   animation-delay: -0.2s;
-}
-.loader__ball3 {
-  left: $ball-interval + $ball-radius * 2;
-}
-.loader:after {
-  left: 30px;
 }
 @keyframes load {
   0%,

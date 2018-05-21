@@ -60,4 +60,20 @@
       color: $text-color-disabled;
     }
   }
+
+  &--loading {
+    cursor: not-allowed;
+    color: $text-color-6;
+    &:before {
+      cursor: default;
+      opacity: 1;
+      transform: scale(2);
+    }
+
+    &:active {
+      &:before {
+        background-color: $background-color-brand-lighter;
+      }
+    }
+  }
 }
