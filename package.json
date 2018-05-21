@@ -25,7 +25,8 @@
   },
   "scripts": {
     "start": "webpack-dev-server --content-base src --hot --inline --mode development",
-    "test": "mocha --require .babel-hook --require babel-polyfill --require babel-register 'src/**/*.test.js'"
+    "test": "mocha --require .babel-hook --require babel-polyfill --require babel-register",
+    "testAll": "mocha --require .babel-hook --require babel-polyfill --require babel-register 'src/**/*.test.js'"
   },
   "dependencies": {
     "api-check": "^7.5.5",
