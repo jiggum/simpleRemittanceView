@@ -1,6 +1,6 @@
 @import 'general/scss/variable.scss';
 
-.MoneyInput{
+.MoneyInput {
   display: flex;
   flex-direction: column;
 }
@@ -16,6 +16,11 @@
   font-size: 13px;
   height: 16px;
   color: $text-color-brand-light;
+  transform: translateX(0);
+}
+
+.MoneyInput__message--animation {
+  animation: shake .5s ease-in-out 1;
 }
 
 .MoneyInput__inputContainer {
@@ -47,4 +52,19 @@
   font-size: 15pt;
   color: $text-color-6;
   display: inline-block;
+}
+
+@keyframes shake {
+  12.5%, 87.5% {
+    transform: translateX(-0.5px);
+  }
+  25%, 75% {
+    transform: translateX(1px);
+  }
+  37.5%, 62.5% {
+    transform: translateX(-1px);
+  }
+  50% {
+    transform: translateX(1px);
+  }
 }

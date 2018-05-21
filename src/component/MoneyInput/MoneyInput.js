@@ -23,6 +23,7 @@ class MoneyInput extends Component {
       message: null,
       warn: false,
     };
+    this.vibrateMessage = this.vibrateMessage.bind(this);
     this.onInputBlur = this.onInputBlur.bind(this);
     this.calcInputWidth = this.calcInputWidth.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
@@ -95,12 +96,21 @@ class MoneyInput extends Component {
         warn: false,
       });
     } catch (e) {
+      this.vibrateMessage();
       this.setState({
         amountMoneyToSend: amountMoneyToSend,
         message: e.message,
         warn: true,
       });
     }
+  }
+
+  vibrateMessage() {
+    const message = this.element.getElementsByClassName('MoneyInput__message')[0];
+    message.classList.remove('MoneyInput__message--animation');
+    setTimeout(() =>{
+      message.classList.add('MoneyInput__message--animation');
+    });
   }
 
   onInputContainerClick(e) {
