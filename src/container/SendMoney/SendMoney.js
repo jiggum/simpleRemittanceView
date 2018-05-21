@@ -3,6 +3,7 @@ import apiCheck from 'api-check';
 
 // import internal dependencies
 import { Component } from 'lib';
+import { remit } from 'service/user';
 import { userAccountType, userType } from 'type';
 import MoneyInput from 'component/MoneyInput/MoneyInput';
 import BankAccountSwiper from 'component/BankAccountSwiper/BankAccountSwiper';
@@ -98,15 +99,22 @@ export class SendMoneyView extends Component {
         state.currentUserAccount.corporation.id !== 'toss');
   }
 
-  onSubmit() {
+  async onSubmit() {
     const payload = {
-      amountMoneyToSend: this.state.amountMoneyToSend,
+      id: this.props.user.id,
+      amount: this.state.amountMoneyToSend,
       corporation: {
         id: this.state.currentUserAccount.corporation.id,
       }
     };
-    // eslint-disable-next-line no-console
-    console.log(`Request Payload : ${JSON.stringify(payload)}`);
+    try {
+      await remit(payload);
+      alert('송금이 완료되었습니다.');
+      // eslint-disable-next-line no-console
+      console.log(`Request Payload : ${JSON.stringify(payload)}`);
+    } catch (e) {
+      alert('송금 요청이 실패하였습니다.');
+    }
   }
 
   renderMessage(props, state) {

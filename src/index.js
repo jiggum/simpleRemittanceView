@@ -1,5 +1,5 @@
 // import UserList class
-import { getUsers, getUsersAccounts } from 'api/users';
+import { getUser, getUsersAccounts } from 'service/user';
 import SendMoney from 'container/SendMoney/SendMoney';
 import { Loader } from 'component/ui';
 // export default UserList class
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const loader = new Loader({});
   loader.render(rootEl.appendChild.bind(rootEl));
   const [user, userAccounts] = await Promise.all([
-    getUsers({ id: userId }),
+    getUser({ id: userId }),
     getUsersAccounts({ id: userId }),
   ]);
   rootEl.removeChild(loader.element);

@@ -1,23 +1,55 @@
 /* eslint-disable indent */
-import userJson from './mock/user.json';
-import userAccounts from './mock/userAccounts.json';
+import userApiResponseMock from './mock/user.json';
+import userAccountsApiResponseMock from './mock/userAccounts.json';
+import remittanceApiResponseMock from './mock/remittance.json';
+import wait from 'util/wait';
 
 const apiRoot = '/api/';
 
-export const get = (url) =>
-  new Promise((resolve) => {
-    setTimeout(() => {
-      const exactUrl = `${apiRoot}${url}`;
-      switch (true) {
-        case /^\/api\/users\/[a-z0-9]+$/.test(exactUrl):
-          resolve(userJson);
-          return;
-        case /^\/api\/users\/[a-z0-9]+\/accounts$/.test(exactUrl):
-          resolve(userAccounts);
-          return;
-        default:
-          resolve({});
-          return;
-      }
-    }, 2000);
-  });
+export const get = async (url) => {
+  await wait(2000);
+  const exactUrl = `${apiRoot}${url}`;
+  let res;
+  switch (true) {
+    case /^\/api\/users\/[a-z0-9]+$/.test(exactUrl):
+      res = userApiResponseMock;
+      break;
+    case /^\/api\/users\/[a-z0-9]+\/accounts$/.test(exactUrl):
+      res = userAccountsApiResponseMock;
+      break;
+    default:
+      res = {
+        status: 200,
+        statusText: 'OK',
+        data: null,
+      };
+      break;
+  }
+  return apiResponseInterCepter(res);
+};
+
+export const post = async (url, payload) => {
+  await wait(2000);
+  const exactUrl = `${apiRoot}${url}`;
+  let res;
+  switch (true) {
+    case /^\/api\/users\/[a-z0-9]+\/remittance/.test(exactUrl):
+      res = remittanceApiResponseMock;
+      break;
+    default:
+      res = {
+        status: 200,
+        statusText: 'OK',
+        data: null,
+      };
+      break;
+  }
+  return apiResponseInterCepter(res);
+}
+
+function apiResponseInterCepter(res) {
+  if (res.status !== 200) {
+    throw res;
+  }
+  return res
+}

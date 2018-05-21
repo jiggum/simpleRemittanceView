@@ -1,12 +1,16 @@
 {
-  "id": "817c2a9",
-  "name": "",
-  "limit": {
-    "daily": 2000000,
-    "remain": 2000000
-  },
-  "remittanceLimit": {
-    "monthly": 5,
-    "remain": 3
+  "status": 200,
+  "statusText": "OK",
+  "data": {
+    "id": "817c2a9",
+    "name": "",
+    "limit": {
+      "daily": 2000000,
+      "remain": 2000000
+    },
+    "remittanceLimit": {
+      "monthly": 5,
+      "remain": 3
+    }
   }
 }
