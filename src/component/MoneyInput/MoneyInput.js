@@ -73,7 +73,7 @@ class MoneyInput extends Component {
     let amountMoneyToSend = this.state.amountMoneyToSend;
     try {
       let amountMoneyToSendStr;
-      const previousAmountMoneyToSendStr = symmetryformatMoneySeparated(e.target.value);
+      const previousAmountMoneyToSendStr = symmetryformatMoneySeparated(this.inputSizer.innerText);
       switch(e.keyCode) {
       // backspace
       case 8:
