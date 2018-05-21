@@ -28,13 +28,14 @@ export default class MoneyInput extends Component {
     };
     this.calcInputWidth = this.calcInputWidth.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
-    this.onInputClick = this.onInputClick.bind(this);
+    this.onInputContainerClick = this.onInputContainerClick.bind(this);
     this.renderWarnMessage = this.renderWarnMessage.bind(this);
   }
 
   componentDidMount() {
     this.element.addEventListener('keydown', this.onKeyDown);
-    this.element.getElementsByClassName('MoneyInput__input')[0].addEventListener('mousedown', this.onInputClick);
+    const inputContainerEl = this.element.getElementsByClassName('MoneyInput__inputContainer')[0];
+    inputContainerEl.addEventListener('mousedown', this.onInputContainerClick);
     this.calcInputWidth();
   }
 
@@ -84,11 +85,13 @@ export default class MoneyInput extends Component {
     }
   }
 
-  onInputClick(e) {
+  onInputContainerClick(e) {
+    const inputEl = this.element.getElementsByClassName('MoneyInput__input')[0];
     e.preventDefault();
-    const inputValueLength = e.target.value.length;
-    e.target.focus();
-    e.target.setSelectionRange(inputValueLength, inputValueLength);
+    e.stopPropagation();
+    const inputValueLength = inputEl.value.length;
+    inputEl.focus();
+    inputEl.setSelectionRange(inputValueLength, inputValueLength);
   }
 
   renderWarnMessage(message) {
