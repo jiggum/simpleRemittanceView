@@ -22,7 +22,7 @@ class Toast extends Component {
       this.setState({
         isHidden: false,
       });
-    }, 0);
+    }, 100);
     // if duration < 0, toast only be hide when call close func directly
     if (this.props.duration >= 0) {
       setTimeout(this.hide, this.props.duration);
