@@ -9,6 +9,7 @@ import {
   formatMoneyKo,
 } from 'util/string';
 import isPrintableKeyCode from 'util/isPrintableKeyCode';
+import getNumberWithUpperBound from 'util/getNumberWithUpperBound';
 
 // import assets
 import './MoneyInput.scss';
@@ -26,6 +27,7 @@ class MoneyInput extends Component {
     this.vibrateMessage = this.vibrateMessage.bind(this);
     this.onInputFocus = this.onInputFocus.bind(this);
     this.onInputBlur = this.onInputBlur.bind(this);
+    this.updateInput = this.updateInput.bind(this);
     this.calcInputWidth = this.calcInputWidth.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onInputContainerClick = this.onInputContainerClick.bind(this);
@@ -63,22 +65,34 @@ class MoneyInput extends Component {
     });
   }
 
+  updateInput(amountMoneyToSend) {
+    this.props.onKeyDown(amountMoneyToSend);
+    // prevent input text's default changing event
+    this.inputEl.value = formatMoneySeparated(amountMoneyToSend.toString());
+    this.calcInputWidth();
+  }
+
   calcInputWidth() {
+    // dynamic input width
     const inputSizer = this.element.getElementsByClassName('MoneyInput__inputSizer')[0];
     inputSizer.innerText = this.inputEl.value;
     this.inputEl.style.width = inputSizer.offsetWidth + 2;
   }
 
+
   onKeyDown(e) {
     let amountMoneyToSend = this.state.amountMoneyToSend;
+    let amountMoneyToSendStr = amountMoneyToSend.toString();
+    let _amountMoneyToSendStr;
+    let _amountMoneyToSend;
     try {
-      let amountMoneyToSendStr;
       const previousAmountMoneyToSendStr = symmetryformatMoneySeparated(this.inputSizer.innerText);
       switch(e.keyCode) {
       // backspace
       case 8:
-        amountMoneyToSendStr = previousAmountMoneyToSendStr.substr(0, previousAmountMoneyToSendStr.length -1) || '0';
-        amountMoneyToSend = parseInt(amountMoneyToSendStr);
+        _amountMoneyToSendStr = previousAmountMoneyToSendStr.substr(0, previousAmountMoneyToSendStr.length -1) || '0';
+        amountMoneyToSend = getNumberWithUpperBound(parseInt(_amountMoneyToSendStr), this.props.maxValue);
+        amountMoneyToSendStr = amountMoneyToSend.toString();
         break;
       // enter
       case 13:
@@ -86,29 +100,27 @@ class MoneyInput extends Component {
         return;
       default:
         if(!isPrintableKeyCode(e.keyCode)) return;
-        const _amountMoneyToSendStr = previousAmountMoneyToSendStr + e.key;
-        const _amountMoneyToSend = parseInt(_amountMoneyToSendStr);
+        _amountMoneyToSendStr = previousAmountMoneyToSendStr + e.key;
+        _amountMoneyToSend = parseInt(_amountMoneyToSendStr);
+        amountMoneyToSend = getNumberWithUpperBound(_amountMoneyToSend, this.props.maxValue);
+        amountMoneyToSendStr = amountMoneyToSend.toString();
         // if is not valid, throw error
-        this.props.validate && this.props.validate(e, amountMoneyToSend);
-        amountMoneyToSendStr = _amountMoneyToSendStr;
-        amountMoneyToSend = _amountMoneyToSend;
+        // validate with input value (not adjusted)
+        this.props.validate && this.props.validate(e, _amountMoneyToSend);
       }
-      this.props.onKeyDown(amountMoneyToSend);
-      // prevent input text's default changing event
       e.preventDefault();
-      e.target.value = formatMoneySeparated(amountMoneyToSendStr);
-      // dynamic input width
-      this.calcInputWidth();
+      this.updateInput(amountMoneyToSend);
       this.setState({
         amountMoneyToSend: amountMoneyToSend,
         message: formatMoneyKo(amountMoneyToSendStr),
         warn: false,
       });
-    } catch (e) {
-      this.vibrateMessage();
+    } catch (error) {
+      e.preventDefault();
+      this.updateInput(amountMoneyToSend);
       this.setState({
         amountMoneyToSend: amountMoneyToSend,
-        message: e.message,
+        message: error.message,
         warn: true,
       });
     }
@@ -156,6 +168,7 @@ MoneyInput.propTypes = {
   initialValue: apiCheck.string,
   onKeyDown: apiCheck.func,
   validate: apiCheck.func,
+  maxValue: apiCheck.number,
 };
 
 export default MoneyInput;

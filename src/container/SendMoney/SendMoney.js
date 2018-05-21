@@ -39,6 +39,7 @@ export class SendMoneyView extends Component {
       initialValue: '0',
       onKeyDown: this.onKeyDownMoneyInput,
       validate: this.validateMoneyInput,
+      maxValue: this.props.user.limit.remain,
     });
     this.moneyInput.render(sendMoneyContentEl.appendChild.bind(sendMoneyContentEl));
 
