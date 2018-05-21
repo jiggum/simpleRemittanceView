@@ -24,12 +24,12 @@
     "webpack-dev-server": "^3.1.4"
   },
   "scripts": {
-    "start": "webpack-dev-server --content-base src --hot --inline --mode development"
+    "start": "webpack-dev-server --content-base src --hot --inline --mode development",
+    "test": "mocha --require .babel-hook --require babel-polyfill --require babel-register 'src/**/*.test.js'"
   },
   "dependencies": {
     "api-check": "^7.5.5",
     "classnames": "^2.2.5",
-    "swiper": "^4.2.6",
-    "vanilla-jsx": "^3.0.2"
+    "swiper": "^4.2.6"
   }
 }

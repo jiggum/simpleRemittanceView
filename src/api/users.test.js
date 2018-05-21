@@ -6,11 +6,11 @@ const usersApi = require('./users');
 
 describe('API Users', function() {
   it('user', async () => {
-    const res = await usersApi.getUsers({id: '817c2a9'});
+    const res = await usersApi.getUsersApi({id: '817c2a9'});
     assert.equal(JSON.stringify(res), JSON.stringify(userJson));
   });
   it('userAccounts', async () => {
-    const res = await usersApi.getUsersAccount({id: '817c2a9'});
+    const res = await usersApi.getUsersAccountsApi({id: '817c2a9'});
     assert.equal(JSON.stringify(res), JSON.stringify(userAccountsJson));
   });
 });

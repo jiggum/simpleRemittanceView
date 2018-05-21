@@ -7,7 +7,7 @@ import wait from 'util/wait';
 const apiRoot = '/api/';
 
 export const get = async (url) => {
-  await wait(2000);
+  await wait(1500);
   const exactUrl = `${apiRoot}${url}`;
   let res;
   switch (true) {
@@ -29,7 +29,7 @@ export const get = async (url) => {
 };
 
 export const post = async (url, payload) => {
-  await wait(2000);
+  await wait(1500);
   // throw error randomly
   if (Math.random() > 0.8) throw Error('Randomly Generated Error');
   const exactUrl = `${apiRoot}${url}`;
