@@ -4,12 +4,14 @@ export default class Component {
   constructor(props) {
     this.props = props;
     this.element = null;
-    this.isRendered = false;
     this.props = props;
     this.state = {};
     this.componentDidMount = this.componentDidMount.bind(this);
     this.setProps = this.setProps.bind(this);
+    this.setState = this.setState.bind(this);
     this.createElementFromHTML = this.createElementFromHTML.bind(this);
+    this.update = this.update.bind(this);
+    this.render = this.render.bind(this);
   }
 
   componentDidMount() {

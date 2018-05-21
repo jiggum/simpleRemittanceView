@@ -1,7 +1,7 @@
 // import external dependencies
 import classnames from 'classnames';
 // import internal dependencies
-import Component from 'service/component/Component';
+import { Component } from 'lib';
 
 // import assets
 import './Message.scss';

@@ -2,7 +2,7 @@
 import Swiper from 'swiper/dist/js/swiper.min';
 
 // import internal dependencies
-import Component from 'service/component/Component';
+import { Component } from 'lib';
 import corporationMap from 'general/constant/corporationMap';
 import { formatMoneySeparated } from 'util/string';
 

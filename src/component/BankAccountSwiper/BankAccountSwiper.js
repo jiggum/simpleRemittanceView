@@ -2,7 +2,7 @@
 import Swiper from 'swiper/dist/js/swiper.min';
 
 // import internal dependencies
-import Component from 'service/component/Component';
+import { Component } from 'lib';
 import BankAccountSwiperSlider from './BankAccountSwiperSlider/BankAccountSwiperSlider';
 
 // import assets

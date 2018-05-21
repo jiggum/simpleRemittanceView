@@ -1,6 +1,6 @@
 // import external dependencies
 // import internal dependencies
-import Component from 'service/component/Component';
+import { Component } from 'lib';
 import MoneyInput from 'component/MoneyInput/MoneyInput';
 import BankAccountSwiper from 'component/BankAccountSwiper/BankAccountSwiper';
 import { Button, Message } from 'component/ui';

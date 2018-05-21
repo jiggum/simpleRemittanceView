@@ -1,6 +1,6 @@
 // import external dependencies
 // import internal dependencies
-import Component from 'service/component/Component';
+import { Component } from 'lib';
 import {
   formatMoneySeparated,
   symmetryformatMoneySeparated,
