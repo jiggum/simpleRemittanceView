@@ -1,9 +1,7 @@
-import cloneObject from 'util/cloneObject';
 import apiCheck from 'api-check';
 
 export default class Component {
   constructor(props) {
-    this.props = props;
     this.element = null;
     this.props = props;
     this.state = {};
@@ -29,13 +27,13 @@ export default class Component {
 
   setProps(props) {
     this.checkPropTypes();
-    const nextProps = Object.assign(cloneObject(this.props), props);
+    const nextProps = Object.assign({}, this.props, props);
     this.element && this.update(nextProps, this.state);
     this.props = nextProps;
   }
 
   setState(state) {
-    const nextState = Object.assign(cloneObject(this.state), state);
+    const nextState = Object.assign({}, this.state, state);
     this.element && this.update(this.props, nextState);
     this.state = nextState;
   }
