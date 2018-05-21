@@ -8,6 +8,7 @@ import {
   symmetryformatMoneySeparated,
   formatMoneyKo,
 } from 'util/string';
+import isPrintableKeyCode from 'util/isPrintableKeyCode';
 
 // import assets
 import './MoneyInput.scss';
@@ -65,12 +66,18 @@ class MoneyInput extends Component {
       let amountMoneyToSendStr;
       const previousAmountMoneyToSendStr = symmetryformatMoneySeparated(e.target.value);
       switch(e.keyCode) {
+      // backspace
       case 8:
-        // backspace
         amountMoneyToSendStr = previousAmountMoneyToSendStr.substr(0, previousAmountMoneyToSendStr.length -1) || '0';
         amountMoneyToSend = parseInt(amountMoneyToSendStr);
         break;
+      // enter
+      case 13:
+        const input = this.element.getElementsByClassName('MoneyInput__input')[0];
+        input.blur();
+        return;
       default:
+        if(!isPrintableKeyCode(e.keyCode)) return;
         amountMoneyToSendStr = previousAmountMoneyToSendStr + e.key;
         amountMoneyToSend = parseInt(amountMoneyToSendStr);
         // if is not valid, throw error
